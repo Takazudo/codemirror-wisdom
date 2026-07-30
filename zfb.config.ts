@@ -32,5 +32,10 @@ export default defineConfig(
     // Cloudflare Workers adapter — required for the Workers static-assets
     // deploy and the package-owned api-ai-chat route. Bindings via wrangler.toml.
     adapter: "@takazudo/zfb-adapter-cloudflare",
+    // Wide home grid on `/` and every locale home. Replaces the former
+    // host-reconstructed pages/index.tsx, which existed only because zudo-doc
+    // 4.2.1 had no toggle (zudolab/zudo-doc#2959); 4.4.x added `home.wide`, so
+    // the package-owned route is used again and index.tsx is back to stock.
+    home: { wide: true },
   }),
 );
