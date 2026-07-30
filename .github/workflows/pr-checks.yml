@@ -110,6 +110,28 @@ jobs:
         run: pnpm format:md:check
 
   # ---------------------------------------------------------------------------
+  # Job 0.7: Category metadata check
+  # ---------------------------------------------------------------------------
+  # Pure-Node script — reads src/ and src/config/settings.ts only, no pnpm
+  # install and no build needed.
+  # Catches two silent failures nothing else here can see: a surviving
+  # _category_.json (zudo-doc cannot read it under zfb, so its label/position/
+  # description/noPage are discarded with a green build) and a headerNav entry
+  # pointing at a `category_no_page: true` page, which 404s site-wide without
+  # tripping check:links --strict-broken.
+  check-category-meta:
+    name: Category Metadata Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+
+      - name: Check category metadata
+        run: node scripts/check-category-meta.mjs
+
+  # ---------------------------------------------------------------------------
   # Job 1: Type checking
   # ---------------------------------------------------------------------------
   typecheck:
