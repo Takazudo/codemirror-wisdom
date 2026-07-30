@@ -6,13 +6,16 @@
 # Format: one repo-relative path per line (no leading slash).
 # Blank lines and `#` comments are ignored.
 #
-# Reconciled for the @takazudo/zudo-doc 4.2.1 "Minimal Scaffold" baseline. The
+# Reconciled for the @takazudo/zudo-doc 4.4.13 "Minimal Scaffold" baseline. The
 # v4 template file set that check:template-drift compares against is small:
 #   base:    pages/index.tsx, pages/docs/[[...slug]].tsx,
 #            scripts/setup-doc-skill.sh, src/styles/global.css, tsconfig.json
-#   i18n:    pages/[locale]/docs/[[...slug]].tsx
-# pages/index.tsx, scripts/setup-doc-skill.sh, and tsconfig.json are kept
-# byte-identical to the v4 templates (no entry needed).
+# scripts/setup-doc-skill.sh and tsconfig.json are kept byte-identical to the
+# v4 templates (no entry needed). The 4.2.1 -> 4.4.13 bump changed only
+# setup-doc-skill.sh upstream (a worktree-awareness fix: build/CLAUDE.md paths
+# now resolve to the MAIN project dir rather than the current worktree), which
+# the host had never customized, so the new template version was adopted
+# wholesale rather than allowlisted.
 #
 # NOTE: this repo's CodeMirror domain (scripts/cm6-bundle-entry.ts,
 # scripts/build-cm6-bundle.sh, public/assets/cm6-bundle.min.js, the
