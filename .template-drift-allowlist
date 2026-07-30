@@ -10,8 +10,14 @@
 # v4 template file set that check:template-drift compares against is small:
 #   base:    pages/index.tsx, pages/docs/[[...slug]].tsx,
 #            scripts/setup-doc-skill.sh, src/styles/global.css, tsconfig.json
-# scripts/setup-doc-skill.sh and tsconfig.json are kept byte-identical to the
-# v4 templates (no entry needed). The 4.2.1 -> 4.4.13 bump changed only
+# scripts/setup-doc-skill.sh, tsconfig.json, and pages/index.tsx are kept
+# byte-identical to the v4 templates (no entry needed). pages/index.tsx was
+# allowlisted until zudo-doc 4.4.x: the host reconstructed it purely to pass
+# `wide` to HomePageView, which 4.2.1 exposed no config toggle for
+# (zudolab/zudo-doc#2959). 4.4.13 ships `home: { wide: true }`, so the override
+# was retired, the file is back to the stock 1-line re-export, and the entry
+# was removed rather than left as permanent drift.
+# The 4.2.1 -> 4.4.13 bump changed only
 # setup-doc-skill.sh upstream (a worktree-awareness fix: build/CLAUDE.md paths
 # now resolve to the MAIN project dir rather than the current worktree), which
 # the host had never customized, so the new template version was adopted
@@ -36,9 +42,3 @@ pages/[locale]/docs/[[...slug]].tsx
 # points --font-sans at Noto, and adds the [data-header-logo] + h1.text-heading
 # Futura rules on top of the regenerated v4 base global.css.
 src/styles/global.css
-
-# ── Wide home page override (css-wisdom PR #182 parity) ──
-# pages/index.tsx is reconstructed (no longer the locked 1-line re-export) to
-# render HomePageView with `wide`, matching the zudo-doc showcase. See the
-# file header + upstream toggle request zudolab/zudo-doc#2959.
-pages/index.tsx
