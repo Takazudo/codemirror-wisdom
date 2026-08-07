@@ -43,6 +43,11 @@ export const settings = {
   } satisfies ColorModeConfig as ColorModeConfig | false,
   siteName: "zudo-codemirror-wisdom",
   siteDescription: "Takazudo's CodeMirror 6 dev notes for me and AI agents" as string,
+  // Home-hero logo. MUST stay explicit: zudo-doc defaults `logo` to "auto",
+  // which renders a generated placeholder SVG seeded by siteName and silently
+  // shadows this site's own brand mark. Rendered as a theme-adaptive CSS mask,
+  // so the asset's fill colors are ignored by design.
+  logo: "/img/logo.svg" as string | false,
   base: "/",
   trailingSlash: false as boolean,
   // Preserve the 3.1.0 (unminified) HTML baseline. v4 defaults minifyHtml to
