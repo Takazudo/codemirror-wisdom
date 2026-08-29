@@ -42,6 +42,24 @@ test("extractHtmlLinks skips external and non-navigable schemes", () => {
   assert.deepEqual(hrefs(extractHtmlLinks(html)), ["/docs/keep"]);
 });
 
+test("escaped source attributes are not mistaken for rendered links or anchors", async () => {
+  await withFiles(
+    {
+      "index.html": [
+        String.raw`<a data-example='href=\"/docs/ghost\"' href=/docs/real>real</a>`,
+        String.raw`<a href="#\">escaped-anchor-probe</a>`,
+        String.raw`<code data-example='id=\"pretend\"'></code>`,
+      ].join(""),
+      "docs/real/index.html": "<h2 id=real>Real</h2>",
+    },
+    async (root) => {
+      const result = await checkHtmlLinksAndTrailing(root, root, "/", []);
+      assert.deepEqual(hrefs(result.broken), []);
+      assert.deepEqual(hrefs(result.anchors), ["#\\"]);
+    },
+  );
+});
+
 test("checkHtmlLinksAndTrailing validates minified unquoted href and id attributes", async () => {
   await withFiles(
     {
