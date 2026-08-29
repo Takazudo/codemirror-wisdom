@@ -5,7 +5,7 @@
 #   2. Pin parity check (pure-Node, reads package.json only)
 #   3. Format check (pnpm format:md:check — pnpm dlx, no install needed)
 #   4. Type check (pnpm check) + wrangler pin check
-#   5. Build the zfb docs site (full clone) + link check
+#   5. Test the link checker, build the zfb docs site (full clone), and check links
 #   6. HTML validate
 #   7. Build doc history JSONs
 #   8. Deploy preview (wrangler versions upload --preview-alias) + post PR comment
@@ -112,8 +112,8 @@ jobs:
   # ---------------------------------------------------------------------------
   # Job 0.7: Category metadata check
   # ---------------------------------------------------------------------------
-  # Pure-Node script — reads src/ and src/config/settings.ts only, no pnpm
-  # install and no build needed.
+  # Pure-Node script — reads src/ and zfb.config.ts only, no pnpm install and
+  # no build needed.
   # Catches two silent failures nothing else here can see: a surviving
   # _category_.json (zudo-doc cannot read it under zfb, so its label/position/
   # description/noPage are discarded with a green build) and a headerNav entry
@@ -194,6 +194,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Test link checker
+        run: pnpm test:links
 
       - name: Build site
         run: pnpm build

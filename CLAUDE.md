@@ -33,7 +33,7 @@ pnpm setup:doc-skill       # Generate codemirror-wisdom skill + symlink all skil
 
 ## Content Categories
 
-Top-level directories under `src/content/docs/`. Directories with header nav entries are mapped via `categoryMatch` in `src/config/settings.ts`:
+Top-level directories under `src/content/docs/`. Directories with header nav entries are mapped via `categoryMatch` in `zfb.config.ts`:
 
 - `overview/` - Introduction and getting started
 - `core/` - Core CodeMirror 6 concepts
@@ -147,7 +147,7 @@ Pre-built IIFE bundle at `public/assets/cm6-bundle.min.js` exposes `window.CM` i
 - Rebuild: `pnpm build:cm6` (entry: `scripts/cm6-bundle-entry.ts`)
 - `js` prop: runtime code using `CM.*` globals
 - `displayJs` prop: clean ESM imports shown in "Show code" panel
-- The bundle is injected via `settings.htmlPreview.head` (base `/`, path `/assets/cm6-bundle.min.js`)
+- The bundle is injected via `htmlPreview.head` in `zfb.config.ts` (base `/`, path `/assets/cm6-bundle.min.js`)
 - Keep HtmlPreview blocks identical in EN/JA -- only translate surrounding text.
 
 ## Navigation Structure
@@ -180,13 +180,13 @@ The `noPage: true` flag means the category has no landing page (just groups item
 
 ### Header Navigation
 
-Defined in `src/config/settings.ts` via `headerNav`. Each item maps to a top-level content directory via `categoryMatch`:
+Defined in `zfb.config.ts` via `headerNav`. Each item maps to a top-level content directory via `categoryMatch`:
 
 ```typescript
 { label: "Overview", path: "/docs/overview", categoryMatch: "overview" }
 ```
 
-`categoryMatch` must be a single top-level directory name. Adding a new header nav item requires editing `settings.ts`.
+`categoryMatch` must be a single top-level directory name. Adding a new header nav item requires editing `zfb.config.ts`.
 
 ## Content Creation Workflow
 
@@ -204,7 +204,7 @@ Defined in `src/config/settings.ts` via `headerNav`. Each item maps to a top-lev
 
 1. Create the directory under `src/content/docs/` (kebab-case)
 2. Create `index.mdx` with `title`, `description`, and `sidebar_position`
-3. Add a `headerNav` entry in `src/config/settings.ts` with `categoryMatch` pointing to the directory name
+3. Add a `headerNav` entry in `zfb.config.ts` with `categoryMatch` pointing to the directory name
 4. Mirror the directory structure under `src/content/docs-ja/`
 5. Run `pnpm build` to verify
 
@@ -225,18 +225,17 @@ Available globally in MDX without imports:
 pages/          # Host-app routing layer (zfb entry points)
 src/
   components/   # Shared UI components
-  config/       # settings.ts — site-wide config (frontmatter schema is package-provided)
   content/      # MDX doc pages (docs/ + docs-ja/)
   utils/        # Shared utilities
 plugins/        # zfb integration plugins (.mjs)
-zfb.config.ts   # Build config (framework, collections, plugins, adapter)
+zfb.config.ts   # Site and build config
 ```
 
 ## Site Config
 
 - Base path: `/` (root — no subpath prefix)
 - Live URL: `https://zudo-codemirror-wisdom.takazudomodular.com/`
-- Settings: `src/config/settings.ts`
+- Settings: `zfb.config.ts`
 - Build config: `zfb.config.ts`
 
 ## CI/CD
