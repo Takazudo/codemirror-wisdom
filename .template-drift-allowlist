@@ -25,7 +25,7 @@
 #
 # NOTE: this repo's CodeMirror domain (scripts/cm6-bundle-entry.ts,
 # scripts/build-cm6-bundle.sh, public/assets/cm6-bundle.min.js, the
-# settings.htmlPreview.head injection, and the window.CM demo MDX) is NOT
+# zfb.config.ts htmlPreview.head injection, and the window.CM demo MDX) is NOT
 # template-owned, so it never appears in the drift check and needs no entry here.
 
 # ── docHistory-patched doc-route stubs ────────────────────────────────────
@@ -36,6 +36,14 @@
 # check flags them. These are the scaffolder's own patched output.
 pages/docs/[[...slug]].tsx
 pages/[locale]/docs/[[...slug]].tsx
+
+# ── Minified HTML compatibility: check-links.js ───────────────────────────
+# zfb's production HTML emits unquoted href/id attributes. The 5.13.1
+# scaffold checker only recognizes quoted values, which makes its built-site
+# pass silently skip navigation links and anchors (zudolab/zudo-doc#3720).
+# Keep the scaffold checker plus the small unquoted-attribute compatibility
+# patch guarded by scripts/check-links.test.mjs.
+scripts/check-links.js
 
 # ── Host customization: brand typography (Futura) + Noto body font ────────
 # src/styles/global.css re-applies the --font-noto / --font-futura brand tokens,

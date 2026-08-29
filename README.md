@@ -23,11 +23,10 @@ pnpm setup:doc-skill  # Generate codemirror-wisdom skill + symlink all skills
 pages/          # Host-app routing layer (zfb entry points)
 src/
   components/   # Shared UI components
-  config/       # settings.ts — site-wide config
   content/      # MDX doc pages (docs/ + docs-ja/)
   utils/        # Shared utilities
 plugins/        # zfb integration plugins (.mjs)
-zfb.config.ts   # Build config (framework, collections, plugins, adapter)
+zfb.config.ts   # Site and build config
 ```
 
 ## Topics
@@ -43,7 +42,7 @@ zfb.config.ts   # Build config (framework, collections, plugins, adapter)
 
 The pre-built IIFE bundle at `public/assets/cm6-bundle.min.js` exposes `window.CM` in every HtmlPreview iframe, enabling live CodeMirror demos in the docs.
 
-Rebuild with `pnpm build:cm6` (entry: `scripts/cm6-bundle-entry.ts`). The bundle is injected via `settings.htmlPreview.head` in `src/config/settings.ts`.
+Rebuild with `pnpm build:cm6` (entry: `scripts/cm6-bundle-entry.ts`). The bundle is injected via `htmlPreview.head` in `zfb.config.ts`.
 
 ## Hosting & CI/CD
 
